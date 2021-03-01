@@ -19,11 +19,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
+    
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
-      run: |
+      run:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Push to Docker Hub
+      uses: docker/build-push-action@v1
+      with:
+        image: aribrahimi/djangotest
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
