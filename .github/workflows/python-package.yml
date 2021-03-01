@@ -21,9 +21,13 @@ jobs:
     - name: python testing
       run: |
         python manage.py test
-        
-    
-    
+    - name: Push to Docker Hub
+      uses: docker/build-push-action@v1
+      with:
+        image: aribrahimi/djangotest
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }} 
     
     
     
